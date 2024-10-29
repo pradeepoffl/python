@@ -1,0 +1,2 @@
+This is source text we are using copy function/ module
+shutil .copy(source, destination)  # copy source to destination
