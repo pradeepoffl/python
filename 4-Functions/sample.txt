@@ -1,0 +1,2 @@
+Hi this function count the number of times a word appears in a list of words. It returns the word and the number
+of times it appears in the list. If the word is not found in the list, it returns.
