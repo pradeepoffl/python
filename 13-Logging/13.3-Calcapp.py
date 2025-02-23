@@ -2,10 +2,10 @@ import logging
 import os
 
 # Create a logger string
-logging_str = "%(asctime)s: %(levelname)s: %(module)s: %(message)s"
+logging_str = "%(asctime)s: %(name)s: %(levelname)s: %(module)s: %(message)s"
 
-log_folder = "logs"
-log_file="logs/running_log.log"
+log_folder = "Logs"
+log_file="Logs/calcapp.log"
 os.makedirs(log_folder,exist_ok=True)
 
 #log_file = os.path.join(log_folder, "running_log.log")  # Use os.path.join for cross-platform compatibility
@@ -15,32 +15,59 @@ os.makedirs(log_folder,exist_ok=True)
 
 # Set up basic logging configuration
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format=logging_str,
     handlers=[
-        logging.FileHandler(log_file)
-    ]
-    
+        logging.FileHandler(log_file),
+        logging.StreamHandler()
+    ]   
 )
 
-logger = logging.getLogger("mylog")
+# creating module logger
+logger = logging.getLogger("Arithmethic APP")
 
-def add_number(a, b):
-    out = a + b
-    logger.info(f"Adding {a} and {b}, Result: {out}")  # Log details about the operation
-    return out
+
+
+def add(a, b):
+    result = a + b
+    logger.debug(f"Adding {a} + {b} = {result}")  # Log details about the operation
+    return result
+
+
+def substract(a, b):
+    result = a - b
+    logger.debug(f"substract {a} - {b} = {result}")  # Log details about the operation
+    return result
+
+def multiply(a, b):
+    result = a * b
+    logger.debug(f"multiply {a} * {b} = {result}")  # Log details about the operation
+    return result
+
+def divide(a, b):
+    try:
+        result = a / b
+        logger.debug(f"Dividing {a} / {b} = {result}")  # Log details about the operation
+        return result   
+    except ZeroDivisionError:
+        logger.error(f"Error: Division by zero is not allowed")  # Log an error messag
+        return None
+    
+
 
 # Execute the function and print the result
 a,b = map(int,input('enter two numbers:').split())
-print(add_number(a,b))
+print(add(a,b))
+
+print(substract(10,5))
+print(multiply(10,5))
+print(divide(5,19))
 
 
 
 
 
-
-
-
+ 
 
 
 
