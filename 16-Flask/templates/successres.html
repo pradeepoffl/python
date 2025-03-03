@@ -1,0 +1,17 @@
+<html>
+    <h1>
+        Final Result:-
+    </h1>
+    <body>
+        <table border=2>
+            {% for key,values in results.items() %}
+            <tr>
+                {# Handling data source using for loop #}
+                <tr> {{ key }}</tr>
+                <tr>{{ values }}</tr>
+            </tr>
+            {%endfor %}
+
+        </table>
+    </body>
+</html>

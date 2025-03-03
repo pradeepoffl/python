@@ -1,5 +1,7 @@
 ''' 
-Jinija template engine is handle by render_template
+Jinija template engine is handle by render_template 
+There are multiple way to handle data source i.e data files in Jinija template engine one is below
+
 {{   }} expressions to print output in html
 {%  %} conditions, for loops
 {#  #} this is for comments
@@ -10,7 +12,7 @@ Jinija template engine is handle by render_template
 
 '''
 
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,redirect,url_for
 '''
 1. It creates an instance of the Flask class,
 which will be your WSGI (web server gateway interface) application.
@@ -38,17 +40,47 @@ def AboutUs():
 
 @app.route('/form',methods=['GET','POST'])
 
-def submit():
-    if request.method == 'POST':
-        name=request.form['name']
-        return f'Hello {name} !! '
-    return render_template("form.html")
-
 
 ## variable rules
 @app.route('/success/<int:score>')
 def success(score):
-    return f'Congratulations, you have scored {str(score)}'
+    res=""
+    if score>=50:
+        res="Passed"
+    else:
+        res="Failed"
+    return render_template('result.html',results=res)
+
+@app.route('/successres/<int:score>')
+def successres(score):
+    res=""
+    if score>=50:
+        res="Passed"
+    else:
+        res="Failed" 
+    exp={'score':score,'res':res} # expresion
+    return render_template('successres.html',results=exp)
+
+
+@app.route('/fail/<int:score>')
+def fail(score):
+    return render_template('result.html',results=score)
+
+@app.route('/submit',methods=['GET','POST'])
+def submit():
+    total_score=0
+    if request.method == 'POST':
+        science = float(request.form['science'])
+        maths = float(request.form['maths'])
+        c = float(request.form['c'])
+        datascience = float(request.form['datascience'])
+
+        total_score = (science+maths+datascience+c)/4
+    else:
+        return render_template('getresult.html')
+    return redirect(url_for('successres',score=total_score))
+
+
 
 # Execution start from here
 if __name__ == '__main__':
